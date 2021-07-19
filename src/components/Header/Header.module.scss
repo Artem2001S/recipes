@@ -1,4 +1,8 @@
+@import 'shared/variables.scss';
+
 .Header {
   display: flex;
   padding: 20px 30px;
+
+  border-bottom: 1px solid $midnight-blue;
 }

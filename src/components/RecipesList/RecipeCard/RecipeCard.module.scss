@@ -1,0 +1,33 @@
+@import 'shared/variables.scss';
+
+.RecipeCard {
+  width: 100%;
+  max-width: 450px;
+  padding: 20px 25px;
+  border: 2px solid $belizehole;
+  border-radius: 8px;
+}
+
+.RecipeCardTitle {
+  color: $peterriver;
+  font-size: 29px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-align: center;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.RecipeContent {
+  position: relative;
+  $line-height: 15px;
+  text-align: center;
+  font-size: 15px;
+  line-height: $line-height;
+  height: (6 * $line-height);
+  hyphens: manual;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

@@ -1,6 +1,8 @@
 @import 'shared/variables.scss';
 
 .Nav {
+  display: flex;
+  align-items: center;
   width: 100%;
 }
 

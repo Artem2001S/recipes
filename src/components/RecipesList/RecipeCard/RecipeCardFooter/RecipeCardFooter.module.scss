@@ -1,0 +1,25 @@
+@import 'shared/variables.scss';
+
+.RecipeFooter {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid $belizehole;
+}
+
+.RecipeFooterIcon {
+  width: 25px;
+}
+
+.RecipeAuthor,
+.RecipeDateOfCreate {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.RecipeFooterText {
+    color: $belizehole;
+}
