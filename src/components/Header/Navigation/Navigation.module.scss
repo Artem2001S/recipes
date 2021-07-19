@@ -1,0 +1,30 @@
+@import 'shared/variables.scss';
+
+.Nav {
+  width: 100%;
+}
+
+.NavList {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  padding: 10px 15px;
+
+  list-style: none;
+}
+
+.NavLink {
+  text-decoration: none;
+  color: $midnight-blue;
+  font-size: 20px;
+
+  transition: color 0.3s;
+
+  &:hover {
+    color: rgba($color: $midnight-blue, $alpha: 0.7);
+  }
+}
+
+.CurrentPageLink {
+  text-decoration: underline;
+}

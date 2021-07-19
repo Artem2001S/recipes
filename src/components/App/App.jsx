@@ -8,15 +8,17 @@ function App() {
   return (
     <Router>
       <Header />
-      <Switch>
-        <Route path="/" exact>
-          Home
-        </Route>
-        <Route path="/recipes/:id" exact>
-          Recipes
-        </Route>
-        <Route path="*">404</Route>
-      </Switch>
+      <main>
+        <Switch>
+          <Route path="/" exact>
+            Home
+          </Route>
+          <Route path="/recipes/:id" exact>
+            Recipes
+          </Route>
+          <Route path="*">404</Route>
+        </Switch>
+      </main>
     </Router>
   );
 }

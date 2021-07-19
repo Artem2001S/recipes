@@ -1,12 +1,13 @@
 import React from 'react';
-import './Header.module.scss';
 import Logo from './Logo/Logo';
+import Navigation from './Navigation/Navigation';
+import classes from './Header.module.scss';
 
 const Header = () => (
-  <div>
+  <header className={classes.Header}>
     <Logo />
-    Header
-  </div>
+    <Navigation />
+  </header>
 );
 
-export default Header;
+export default React.memo(Header);
