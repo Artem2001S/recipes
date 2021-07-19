@@ -1,0 +1,25 @@
+@import 'shared/variables.scss';
+
+.Logo {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+
+  transition: opacity 0.5s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  text-decoration: none;
+  color: inherit;
+}
+
+.LogoImg {
+  width: 70px;
+}
+
+.LogoText {
+  font-size: 28px;
+  color: $midnight-blue;
+}
