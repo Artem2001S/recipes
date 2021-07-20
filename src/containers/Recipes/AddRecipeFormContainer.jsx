@@ -39,6 +39,7 @@ const AddRecipeFormContainer = ({ closeSidebar }) => {
 
   return (
     <Form
+      title={'Add new recipe'}
       errors={errors}
       inputs={inputs}
       onInputChange={handleInputChange}

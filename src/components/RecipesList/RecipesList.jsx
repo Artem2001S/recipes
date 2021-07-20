@@ -7,8 +7,7 @@ import classes from './RecipesList.module.scss';
 const RecipesList = ({ recipes, onDelete }) => {
   return (
     <>
-      <Title>Recipes List</Title>
-
+      <Title large>Recipes List</Title>
       <div className={classes.RecipesList}>
         {recipes.length ? (
           recipes.map((recipe, index) => (

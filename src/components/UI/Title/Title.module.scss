@@ -6,4 +6,16 @@
   font-size: 40px;
 
   color: $midnight-blue;
+
+  &.Large {
+    font-size: 40px;
+  }
+
+  &.Medium {
+    font-size: 30px;
+  }
+
+  &.Small {
+    font-size: 20px;
+  }
 }

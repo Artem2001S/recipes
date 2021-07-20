@@ -12,7 +12,7 @@
 
 @keyframes showFromLeftToRightContent {
   0% {
-    left: -100vw;
+    left: -45vw;
   }
 
   100% {
@@ -22,7 +22,7 @@
 
 @keyframes showFromRightToLeft {
   0% {
-    right: -100vw;
+    right: -45vw;
   }
 
   100% {
@@ -52,10 +52,12 @@
 
   height: 100vh;
   padding: 40px;
-  min-width: 300px;
-  max-width: 45vw;
+  width: 35vw;
+  min-width: 400px;
   background-color: $clouds;
   opacity: 1;
+
+  overflow-y: auto;
 
   &.Left {
     animation: showFromLeftToRightContent 0.3s forwards ease-in-out;
