@@ -8,6 +8,7 @@ const Button = ({ children, dangerous, onClick }) => {
     { [classes.Dangerous]: dangerous },
     classes.Button
   );
+
   return (
     <button className={btnClasses} type="button" onClick={onClick}>
       {children}
@@ -20,4 +21,4 @@ Button.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default Button;
+export default React.memo(Button);

@@ -1,6 +1,6 @@
 import React from 'react';
-import RecipesListContainer from 'containers/RecipesListContainer';
+import Recipes from 'containers/Recipes/Recipes';
 
-const HomePage = () => <RecipesListContainer />;
+const HomePage = () => <Recipes />;
 
 export default React.memo(HomePage);
