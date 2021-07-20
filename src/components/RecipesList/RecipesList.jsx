@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Title from 'components/Title/Title';
+import Title from 'components/UI/Title/Title';
 import RecipeCard from './RecipeCard/RecipeCard';
 import classes from './RecipesList.module.scss';
 

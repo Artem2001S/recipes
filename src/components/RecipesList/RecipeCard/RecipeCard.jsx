@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RecipeCardFooter from './RecipeCardFooter/RecipeCardFooter';
+import Button from 'components/UI/Button/Button';
 import classes from './RecipeCard.module.scss';
 
 const RecipeCard = ({ id, author, title, content, dateOfCreate }) => {
@@ -8,6 +9,11 @@ const RecipeCard = ({ id, author, title, content, dateOfCreate }) => {
     <div className={classes.RecipeCard}>
       <div className={classes.RecipeCardTitle}>{title}</div>
       <div className={classes.RecipeContent}>{content}</div>
+      <div className={classes.RecipeActions}>
+        <Button>Open</Button>
+        <Button dangerous>Delete</Button>
+      </div>
+
       <RecipeCardFooter author={author} dateOfCreate={dateOfCreate} />
     </div>
   );

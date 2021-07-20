@@ -1,0 +1,25 @@
+@import 'shared/variables.scss';
+
+.Button {
+  background-color: $peterriver;
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: $clouds;
+
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+
+  &:hover {
+    border: 1px solid $clouds;
+    background-color: darken($color: $peterriver, $amount: 10%);
+  }
+
+  &.Dangerous {
+    background-color: $alizarin;
+    &:hover {
+      background-color: darken($color: $alizarin, $amount: 10%);
+    }
+  }
+}

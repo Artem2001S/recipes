@@ -23,11 +23,17 @@
 .RecipeContent {
   position: relative;
   $line-height: 15px;
-  text-align: center;
-  font-size: 15px;
   line-height: $line-height;
   height: (6 * $line-height);
+
+  font-size: 15px;
+  text-align: center;
   hyphens: manual;
-  text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.RecipeActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
