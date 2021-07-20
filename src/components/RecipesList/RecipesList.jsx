@@ -14,10 +14,12 @@ const RecipesList = ({
   onCloseSidebar,
 }) => {
   return (
-    <div>
+    <div className={classes.RecipeContainer}>
       <Title>Recipes List</Title>
       <Button onClick={onOpenSidebar}>Add new recipe</Button>
-      <Sidebar visible={sidebarVisibility} right close={onCloseSidebar}>content</Sidebar>
+      <Sidebar visible={sidebarVisibility} right close={onCloseSidebar}>
+        content
+      </Sidebar>
       <div className={classes.RecipesList}>
         {recipes.length ? (
           recipes.map((recipe, index) => (
