@@ -4,3 +4,39 @@ $peterriver: #3498db;
 $belizehole: #2980b9;
 $clouds: #ecf0f1;
 $alizarin: #e74c3c;
+
+$laptopWidth: 1024px;
+$tabletWidth: 768px;
+$mobileLWidth: 425px;
+$mobileMWidth: 375px;
+$mobilesSWidth: 320px;
+
+@mixin laptopMedia() {
+  @media (max-width: $laptopWidth) {
+    @content;
+  }
+}
+
+@mixin tabletMedia() {
+  @media (max-width: $tabletWidth) {
+    @content;
+  }
+}
+
+@mixin mobileLMedia() {
+  @media (max-width: $mobileLWidth) {
+    @content;
+  }
+}
+
+@mixin mobileMMedia() {
+  @media (max-width: $mobileMWidth) {
+    @content;
+  }
+}
+
+@mixin mobileSMedia() {
+  @media (max-width: $mobileSWidth) {
+    @content;
+  }
+}

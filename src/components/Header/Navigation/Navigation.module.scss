@@ -9,6 +9,8 @@
 .NavList {
   display: flex;
   width: 100%;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: space-around;
   padding: 10px 15px;
 
@@ -24,6 +26,14 @@
 
   &:hover {
     color: rgba($color: $midnight-blue, $alpha: 0.7);
+  }
+
+  @include laptopMedia() {
+    font-size: 18px;
+  }
+
+  @include mobileLMedia() {
+    font-size: 16px;
   }
 }
 

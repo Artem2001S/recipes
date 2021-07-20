@@ -14,9 +14,25 @@
 
 .LogoImg {
   width: 70px;
+
+  @include laptopMedia() {
+    width: 50px;
+  }
+
+  @include mobileLMedia() {
+    width: 40px;
+  }
 }
 
 .LogoText {
   font-size: 28px;
   color: $midnight-blue;
+
+  @include laptopMedia() {
+    font-size: 21px;
+  }
+
+  @include mobileLMedia() {
+    font-size: 19px;
+  }
 }

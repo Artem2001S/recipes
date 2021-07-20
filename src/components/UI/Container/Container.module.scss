@@ -1,6 +1,12 @@
+@import 'shared/variables.scss';
+
 .Container {
   width: 100%;
   max-width: 1800px;
   padding: 10px 30px;
   margin: auto;
+
+  @include mobileLMedia {
+    padding: 10px 20px;
+  }
 }

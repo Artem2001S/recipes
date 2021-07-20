@@ -5,4 +5,8 @@
   padding: 20px 30px;
 
   border-bottom: 1px solid $midnight-blue;
+
+  @include laptopMedia() {
+    padding: 15px 25px;
+  }
 }

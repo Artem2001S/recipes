@@ -9,4 +9,8 @@
   align-content: center;
 
   padding: 30px;
+
+  @include mobileLMedia {
+    padding: 10px;
+  }
 }

@@ -53,7 +53,7 @@
   height: 100vh;
   padding: 40px;
   width: 35vw;
-  min-width: 400px;
+
   background-color: $clouds;
   opacity: 1;
 
@@ -65,5 +65,17 @@
 
   &.Right {
     animation: showFromRightToLeft 0.3s forwards ease-in-out;
+  }
+
+  @include laptopMedia() {
+    width: 50vw;
+  }
+
+  @include tabletMedia() {
+    width: 65vw;
+  }
+
+  @include mobileLMedia() {
+    width: 90vw;
   }
 }

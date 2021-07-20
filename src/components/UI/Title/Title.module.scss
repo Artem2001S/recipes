@@ -9,10 +9,26 @@
 
   &.Large {
     font-size: 40px;
+
+    @include laptopMedia() {
+      font-size: 34px;
+    }
+
+    @include mobileLMedia() {
+      font-size: 28px;
+    }
   }
 
   &.Medium {
     font-size: 30px;
+
+    @include laptopMedia() {
+      font-size: 28px;
+    }
+
+    @include mobileLMedia() {
+      font-size: 20px;
+    }
   }
 
   &.Small {
