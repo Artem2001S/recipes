@@ -26,10 +26,12 @@
   line-height: $line-height;
   height: (6 * $line-height);
 
+  color: $midnight-blue;
   font-size: 15px;
   text-align: center;
   hyphens: manual;
   overflow: hidden;
+  white-space: pre-line;
 }
 
 .RecipeActions {
