@@ -1,19 +1,50 @@
-import Form from 'components/Form/Form';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { inputValueChanged } from 'redux/recipes/addRecipeFormSlice';
+import {
+  getValidationErrors,
+  inputValueChanged,
+  resetState,
+} from 'redux/recipes/addRecipeFormSlice';
+import { getRecipeObjectFromInputs, validateInputs } from 'shared/recipeInputs';
+import { recipeAdded } from 'redux/recipes/recipesSlice';
+import Form from 'components/Form/Form';
 
-const AddRecipeFormContainer = () => {
+const AddRecipeFormContainer = ({ closeSidebar }) => {
   const dispatch = useDispatch();
 
-  const inputs = useSelector((state) => state.addRecipeForm);
+  const { inputs, errors } = useSelector((state) => state.addRecipeForm);
 
   const handleInputChange = useCallback(
     (id, value) => dispatch(inputValueChanged({ id, value })),
     [dispatch]
   );
 
-  return <Form inputs={inputs} onInputChange={handleInputChange} />;
+  const handleInputFormSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      const validationErrors = validateInputs(inputs);
+
+      if (validationErrors.length) {
+        dispatch(getValidationErrors({ errors: validationErrors }));
+      } else {
+        const recipe = getRecipeObjectFromInputs(inputs);
+        dispatch(recipeAdded({ ...recipe }));
+        dispatch(resetState());
+        closeSidebar();
+      }
+    },
+    [inputs, dispatch, closeSidebar]
+  );
+
+  return (
+    <Form
+      errors={errors}
+      inputs={inputs}
+      onInputChange={handleInputChange}
+      onSubmit={handleInputFormSubmit}
+    />
+  );
 };
 
 export default React.memo(AddRecipeFormContainer);

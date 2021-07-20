@@ -1,4 +1,4 @@
-const { createSlice } = require('@reduxjs/toolkit');
+const { createSlice, nanoid } = require('@reduxjs/toolkit');
 
 const initialState = [
   {
@@ -64,8 +64,21 @@ const recipesSlice = createSlice({
     recipeDeleted: (state, { payload }) => {
       return state.filter((recipe) => recipe.id !== payload.id);
     },
+    recipeAdded: {
+      reducer: (state, { payload }) => {
+        state.unshift(payload);
+      },
+      prepare: (payload) => ({
+        payload: {
+          ...payload,
+          id: nanoid(),
+          dateOfCreate: new Date().toLocaleDateString(),
+          dateOfLastEdit: null,
+        },
+      }),
+    },
   },
 });
 
-export const { recipeDeleted } = recipesSlice.actions;
+export const { recipeDeleted, recipeAdded } = recipesSlice.actions;
 export const recipesReducer = recipesSlice.reducer;

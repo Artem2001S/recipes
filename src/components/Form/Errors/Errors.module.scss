@@ -1,0 +1,12 @@
+@import 'shared/variables.scss';
+
+.Error {
+  padding: 10px;
+  background-color: $alizarin;
+  border-radius: 10px;
+}
+
+.ErrorMessage {
+  color: $clouds;
+  padding: 3px 0;
+}

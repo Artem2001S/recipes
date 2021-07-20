@@ -18,7 +18,7 @@ const Recipes = () => {
     <Container>
       <Button onClick={openSidebarBtnClickHandler}>Add new recipe</Button>
       <Sidebar visible={sidebarVisibility} close={closeSidebar}>
-        <AddRecipeFormContainer />
+        <AddRecipeFormContainer closeSidebar={closeSidebar} />
       </Sidebar>
       <RecipesListContainer />
     </Container>

@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/UI/Input/Input';
-import classes from './Form.module.scss';
 import Textarea from 'components/UI/Textarea/Textarea';
+import Button from 'components/UI/Button/Button';
+import classes from './Form.module.scss';
+import Errors from './Errors/Errors';
 
-const Form = ({ inputs, onInputChange, onSubmit }) => {
+const Form = ({ inputs, onInputChange, errors, onSubmit }) => {
   return (
-    <form className={classes.Form}>
+    <form className={classes.Form} onSubmit={onSubmit}>
+      {errors.length > 0 && <Errors errors={errors} />}
       {inputs.map(({ validationData, ...input }) =>
         input.type === 'text' ? (
           <Input key={input.id} {...input} onChange={onInputChange} />
@@ -14,11 +17,13 @@ const Form = ({ inputs, onInputChange, onSubmit }) => {
           <Textarea key={input.id} {...input} onChange={onInputChange} />
         )
       )}
+      <Button type="submit">Add</Button>
     </form>
   );
 };
 
 Form.propTypes = {
+  errors: PropTypes.arrayOf(PropTypes.string),
   inputs: PropTypes.array,
   onInputChange: PropTypes.func,
   onSubmit: PropTypes.func,
