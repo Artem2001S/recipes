@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { recipeDeleted } from 'redux/recipes/recipesSlice';
 import RecipesList from 'components/RecipesList/RecipesList';
+import { useState } from 'react';
 
 const RecipesListContainer = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,22 @@ const RecipesListContainer = () => {
     [dispatch]
   );
 
-  return <RecipesList recipes={recipes} onDelete={handleDelete} />;
+  const [sidebarVisibility, setSidebarVisibility] = useState(false);
+
+  const openSidebar = useCallback(() => {
+    setSidebarVisibility(true);
+  }, []);
+  const closeSidebar = useCallback(() => setSidebarVisibility(false), []);
+
+  return (
+    <RecipesList
+      recipes={recipes}
+      sidebarVisibility={sidebarVisibility}
+      onDelete={handleDelete}
+      onOpenSidebar={openSidebar}
+      onCloseSidebar={closeSidebar}
+    />
+  );
 };
 
 export default React.memo(RecipesListContainer);

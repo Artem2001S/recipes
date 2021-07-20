@@ -3,11 +3,21 @@ import PropTypes from 'prop-types';
 import Title from 'components/UI/Title/Title';
 import RecipeCard from './RecipeCard/RecipeCard';
 import classes from './RecipesList.module.scss';
+import Sidebar from 'components/UI/Sidebar/Sidebar';
+import Button from 'components/UI/Button/Button';
 
-const RecipesList = ({ recipes, onDelete }) => {
+const RecipesList = ({
+  sidebarVisibility,
+  recipes,
+  onDelete,
+  onOpenSidebar,
+  onCloseSidebar,
+}) => {
   return (
     <div>
       <Title>Recipes List</Title>
+      <Button onClick={onOpenSidebar}>Add new recipe</Button>
+      <Sidebar visible={sidebarVisibility} right close={onCloseSidebar}>content</Sidebar>
       <div className={classes.RecipesList}>
         {recipes.length ? (
           recipes.map((recipe, index) => (
