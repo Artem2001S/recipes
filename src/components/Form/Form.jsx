@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/UI/Input/Input';
 import classes from './Form.module.scss';
+import Textarea from 'components/UI/Textarea/Textarea';
 
 const Form = ({ inputs, onInputChange, onSubmit }) => {
   return (
@@ -10,7 +11,7 @@ const Form = ({ inputs, onInputChange, onSubmit }) => {
         input.type === 'text' ? (
           <Input key={input.id} {...input} onChange={onInputChange} />
         ) : (
-          'textarea'
+          <Textarea key={input.id} {...input} onChange={onInputChange} />
         )
       )}
     </form>
