@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Title from 'components/UI/Title/Title';
 import RecipeCard from './RecipeCard/RecipeCard';
-import classes from './RecipesList.module.scss';
 import Sidebar from 'components/UI/Sidebar/Sidebar';
 import Button from 'components/UI/Button/Button';
+import Container from 'components/UI/Container/Container';
+import classes from './RecipesList.module.scss';
 
 const RecipesList = ({
   sidebarVisibility,
@@ -14,7 +15,7 @@ const RecipesList = ({
   onCloseSidebar,
 }) => {
   return (
-    <div className={classes.RecipeContainer}>
+    <Container>
       <Title>Recipes List</Title>
       <Button onClick={onOpenSidebar}>Add new recipe</Button>
       <Sidebar visible={sidebarVisibility} right close={onCloseSidebar}>
@@ -34,7 +35,7 @@ const RecipesList = ({
           <Title>Recipes not found</Title>
         )}
       </div>
-    </div>
+    </Container>
   );
 };
 
