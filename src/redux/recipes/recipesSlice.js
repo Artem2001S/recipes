@@ -60,8 +60,12 @@ const initialState = [
 const recipesSlice = createSlice({
   name: 'recipes',
   initialState,
-  reducers: {},
+  reducers: {
+    recipeDeleted: (state, { payload }) => {
+      return state.filter((recipe) => recipe.id !== payload.id);
+    },
+  },
 });
 
-export const {} = recipesSlice.actions;
+export const { recipeDeleted } = recipesSlice.actions;
 export const recipesReducer = recipesSlice.reducer;
