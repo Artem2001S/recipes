@@ -1,0 +1,22 @@
+@import 'shared/variables.scss';
+
+.Label {
+  display: flex;
+  flex-direction: column;
+}
+
+.LabelText {
+  color: $midnight-blue;
+  margin-bottom: 2px;
+}
+
+.Input {
+  display: block;
+  width: 100%;
+  color: $midnight-blue;
+  font-size: 16px;
+  padding: 10px 12px;
+  border: 2px solid $peterriver;
+  border-radius: 4px;
+  outline: none;
+}
