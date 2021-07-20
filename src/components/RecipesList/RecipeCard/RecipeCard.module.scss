@@ -37,3 +37,17 @@
   justify-content: space-between;
   margin-top: 10px;
 }
+
+.RecipeOpenLink {
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 2px solid $belizehole;
+  border-radius: 5px;
+  color: $belizehole;
+
+  transition: color 0.3s, background-color 0.3s;
+
+  &:hover {
+    background-color: lighten($color: $belizehole, $amount: 51%);
+  }
+}

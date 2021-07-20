@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import RecipesList from 'components/RecipesList/RecipesList';
 import { recipeDeleted } from 'redux/recipes/recipesSlice';
+import RecipesList from 'components/RecipesList/RecipesList';
 
 const RecipesListContainer = () => {
   const dispatch = useDispatch();

@@ -3,8 +3,17 @@ import PropTypes from 'prop-types';
 import RecipeCardFooter from './RecipeCardFooter/RecipeCardFooter';
 import Button from 'components/UI/Button/Button';
 import classes from './RecipeCard.module.scss';
+import { Link } from 'react-router-dom';
 
-const RecipeCard = ({ id, author, title, content, dateOfCreate, onDelete }) => {
+const RecipeCard = ({
+  id,
+  author,
+  title,
+  content,
+  dateOfCreate,
+  position,
+  onDelete,
+}) => {
   const deleteBtnClickHandler = useCallback(() => onDelete(id), [id, onDelete]);
 
   return (
@@ -12,7 +21,9 @@ const RecipeCard = ({ id, author, title, content, dateOfCreate, onDelete }) => {
       <div className={classes.RecipeCardTitle}>{title}</div>
       <div className={classes.RecipeContent}>{content}</div>
       <div className={classes.RecipeActions}>
-        <Button>Open</Button>
+        <Link className={classes.RecipeOpenLink} to={`/recipes/${position}`}>
+          Open
+        </Link>
         <Button dangerous onClick={deleteBtnClickHandler}>
           Delete
         </Button>
@@ -29,6 +40,7 @@ RecipeCard.propTypes = {
   title: PropTypes.string,
   content: PropTypes.string,
   dateOfCreate: PropTypes.string,
+  position: PropTypes.number.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 
