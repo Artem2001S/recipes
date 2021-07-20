@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classes from './Sidebar.module.scss';
 import classNames from 'classnames';
@@ -19,9 +19,13 @@ const Sidebar = ({ visible, close, children, right, left = true }) => {
     }
   }, [visible]);
 
+  const stopPropagation = useCallback((e) => e.stopPropagation(), []);
+
   return visible ? (
     <div className={classes.SidebarOverlay} onClick={close}>
-      <div className={contentClasses}>{children}</div>
+      <div className={contentClasses} onClick={stopPropagation}>
+        {children}
+      </div>
     </div>
   ) : null;
 };
