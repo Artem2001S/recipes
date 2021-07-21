@@ -30,7 +30,7 @@ const SearchRecipeForm = () => {
   const formSubmitHandler = useCallback(
     (e) => {
       e.preventDefault();
-      // change url
+      // change url, then dispatch (search value changed) using useEffect
       searchInput.value
         ? history.push(`?search=${searchInput.value}`)
         : history.push('');
@@ -42,8 +42,8 @@ const SearchRecipeForm = () => {
     <Form
       title="Search recipe"
       submitBtnText="Search"
-      onSubmit={formSubmitHandler}
       inputs={[searchInput]}
+      onSubmit={formSubmitHandler}
       onInputChange={inputChangeHandler}
     />
   );
