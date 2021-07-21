@@ -22,6 +22,10 @@ const searchRecipeFormSlice = createSlice({
     },
     searchValueChanged: (state, { payload }) => {
       state.searchValue = payload.value;
+
+      if (state.inputs[0].value !== payload.value) {
+        state.inputs[0].value = payload.value;
+      }
     },
   },
 });

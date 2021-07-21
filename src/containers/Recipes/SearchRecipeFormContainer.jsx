@@ -1,14 +1,24 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import Form from 'components/Form/Form';
+import { useQuery } from 'hooks/useQuery';
 import {
   inputValueChanged,
   searchValueChanged,
 } from 'redux/recipes/searchRecipeForm';
+import Form from 'components/Form/Form';
 
 const SearchRecipeForm = () => {
   const dispatch = useDispatch();
-  const { inputs } = useSelector((state) => state.searchRecipeForm);
+  const history = useHistory();
+  const query = useQuery();
+
+  const [searchInput] = useSelector((state) => state.searchRecipeForm.inputs);
+  const urlValue = query.get('search');
+
+  useEffect(() => {
+    dispatch(searchValueChanged({ value: urlValue || '' }));
+  }, [dispatch, urlValue]);
 
   const inputChangeHandler = useCallback(
     (id, value) => {
@@ -20,9 +30,12 @@ const SearchRecipeForm = () => {
   const formSubmitHandler = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(searchValueChanged({ value: inputs[0]?.value }));
+      // change url
+      searchInput.value
+        ? history.push(`?search=${searchInput.value}`)
+        : history.push('');
     },
-    [dispatch, inputs]
+    [history, searchInput]
   );
 
   return (
@@ -30,7 +43,7 @@ const SearchRecipeForm = () => {
       title="Search recipe"
       submitBtnText="Search"
       onSubmit={formSubmitHandler}
-      inputs={inputs}
+      inputs={[searchInput]}
       onInputChange={inputChangeHandler}
     />
   );
