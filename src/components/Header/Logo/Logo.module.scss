@@ -3,13 +3,6 @@
 .Logo {
   display: inline-flex;
   align-items: center;
-  cursor: pointer;
-
-  transition: opacity 0.5s;
-
-  &:hover {
-    opacity: 0.8;
-  }
 }
 
 .LogoImg {

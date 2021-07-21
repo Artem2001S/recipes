@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classes from './Sidebar.module.scss';
 import classNames from 'classnames';
 
-const Sidebar = ({ visible, close, children, right, left = true }) => {
+const Sidebar = ({ visible, children, right, left = true, close }) => {
   const contentClasses = classNames(
     { [classes.Right]: right },
     { [classes.Left]: left },
@@ -31,9 +31,11 @@ const Sidebar = ({ visible, close, children, right, left = true }) => {
 };
 
 Sidebar.propTypes = {
+  visible: PropTypes.bool,
   children: PropTypes.node,
   right: PropTypes.bool,
   left: PropTypes.bool,
+  close: PropTypes.func,
 };
 
 export default React.memo(Sidebar);

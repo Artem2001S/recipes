@@ -79,8 +79,16 @@ const recipesSlice = createSlice({
         },
       }),
     },
+    recipeEdited: {
+      reducer: (state, { payload }) => {
+        return state.map((recipe) =>
+          recipe.id === payload.id ? { ...recipe, ...payload } : recipe
+        );
+      },
+    },
   },
 });
 
-export const { recipeDeleted, recipeAdded } = recipesSlice.actions;
+export const { recipeDeleted, recipeAdded, recipeEdited } =
+  recipesSlice.actions;
 export const recipesReducer = recipesSlice.reducer;

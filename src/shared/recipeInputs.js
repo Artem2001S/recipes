@@ -54,3 +54,10 @@ export const getRecipeObjectFromInputs = (inputs) => {
 
   return recipe;
 };
+
+export const fillRecipeInputs = (recipe) => {
+  return recipeInputs.map((input) => ({
+    ...input,
+    value: recipe[input.name],
+  }));
+};
