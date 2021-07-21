@@ -1,4 +1,4 @@
-const { createSlice, nanoid } = require('@reduxjs/toolkit');
+const { createSlice } = require('@reduxjs/toolkit');
 
 const initialState = [
   {
@@ -57,6 +57,8 @@ const initialState = [
   },
 ];
 
+let nextRecipeId = initialState.length + 1;
+
 const recipesSlice = createSlice({
   name: 'recipes',
   initialState,
@@ -71,7 +73,7 @@ const recipesSlice = createSlice({
       prepare: (payload) => ({
         payload: {
           ...payload,
-          id: nanoid(),
+          id: nextRecipeId++ + '',
           dateOfCreate: new Date().toLocaleDateString(),
           dateOfLastEdit: null,
         },

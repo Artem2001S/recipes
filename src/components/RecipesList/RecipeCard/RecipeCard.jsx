@@ -5,15 +5,7 @@ import Button from 'components/UI/Button/Button';
 import classes from './RecipeCard.module.scss';
 import { Link } from 'react-router-dom';
 
-const RecipeCard = ({
-  id,
-  author,
-  title,
-  content,
-  dateOfCreate,
-  position,
-  onDelete,
-}) => {
+const RecipeCard = ({ id, author, title, content, dateOfCreate, onDelete }) => {
   const deleteBtnClickHandler = useCallback(() => onDelete(id), [id, onDelete]);
 
   return (
@@ -21,7 +13,7 @@ const RecipeCard = ({
       <div className={classes.RecipeCardTitle}>{title}</div>
       <div className={classes.RecipeContent}>{content}</div>
       <div className={classes.RecipeActions}>
-        <Link className={classes.RecipeOpenLink} to={`/recipes/${position}`}>
+        <Link className={classes.RecipeOpenLink} to={`/recipes/${id}`}>
           Open
         </Link>
         <Button dangerous onClick={deleteBtnClickHandler}>
@@ -40,7 +32,6 @@ RecipeCard.propTypes = {
   title: PropTypes.string,
   content: PropTypes.string,
   dateOfCreate: PropTypes.string,
-  position: PropTypes.number.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 

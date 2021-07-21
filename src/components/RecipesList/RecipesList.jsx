@@ -10,12 +10,7 @@ const RecipesList = ({ recipes, onDelete }) => (
     <div className={classes.RecipesList}>
       {recipes?.length ? (
         recipes.map((recipe, index) => (
-          <RecipeCard
-            key={recipe.id}
-            {...recipe}
-            position={index + 1}
-            onDelete={onDelete}
-          />
+          <RecipeCard key={recipe.id} {...recipe} onDelete={onDelete} />
         ))
       ) : (
         <Title>Recipes not found</Title>
