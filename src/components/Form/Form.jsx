@@ -7,11 +7,18 @@ import Errors from './Errors/Errors';
 import Title from 'components/UI/Title/Title';
 import classes from './Form.module.scss';
 
-const Form = ({ title, inputs, onInputChange, errors, onSubmit }) => {
+const Form = ({
+  title,
+  inputs,
+  onInputChange,
+  errors,
+  submitBtnText = 'Submit',
+  onSubmit,
+}) => {
   return (
     <form className={classes.Form} onSubmit={onSubmit}>
       {title && <Title medium>{title}</Title>}
-      {errors.length > 0 && <Errors errors={errors} />}
+      {errors?.length > 0 && <Errors errors={errors} />}
       {inputs.map(({ validationData, ...input }) =>
         input.type === 'text' ? (
           <Input key={input.id} {...input} onChange={onInputChange} />
@@ -19,12 +26,14 @@ const Form = ({ title, inputs, onInputChange, errors, onSubmit }) => {
           <Textarea key={input.id} {...input} onChange={onInputChange} />
         )
       )}
-      <Button type="submit">Add</Button>
+      <Button type="submit">{submitBtnText}</Button>
     </form>
   );
 };
 
 Form.propTypes = {
+  title: PropTypes.string,
+  submitBtnText: PropTypes.string,
   errors: PropTypes.arrayOf(PropTypes.string),
   inputs: PropTypes.array,
   onInputChange: PropTypes.func,

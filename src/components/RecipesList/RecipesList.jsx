@@ -9,7 +9,7 @@ const RecipesList = ({ recipes, onDelete }) => {
     <>
       <Title large>Recipes List</Title>
       <div className={classes.RecipesList}>
-        {recipes.length ? (
+        {recipes?.length ? (
           recipes.map((recipe, index) => (
             <RecipeCard
               key={recipe.id}
