@@ -29,7 +29,7 @@ const AddRecipeFormContainer = ({ closeSidebar }) => {
         dispatch(getValidationErrors({ errors: validationErrors }));
       } else {
         const recipe = getRecipeObjectFromInputs(inputs);
-        dispatch(recipeAdded({ ...recipe }));
+        dispatch(recipeAdded(recipe));
         dispatch(resetState());
         closeSidebar();
       }
