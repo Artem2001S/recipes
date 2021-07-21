@@ -3,8 +3,13 @@ import { createSelector } from 'reselect';
 const getRecipes = (state) => state.recipes;
 const getRecipesSearchValue = (state) => state.searchRecipeForm.searchValue;
 
+export const getRecipesSelector = createSelector(
+  [getRecipes],
+  (recipes) => recipes
+);
+
 export const getFilteredRecipes = createSelector(
-  [getRecipes, getRecipesSearchValue],
+  [getRecipesSelector, getRecipesSearchValue],
   (recipes, searchValue) => {
     if (!searchValue) {
       return recipes;
