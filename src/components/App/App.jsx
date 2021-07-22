@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from 'components/Header/Header';
-import './normalize.scss';
-import './App.scss';
 import HomePage from 'pages/HomePage';
 import RecipePage from 'pages/RecipePage';
+import './App.scss';
+import 'normalize.css';
 
 function App() {
   return (
