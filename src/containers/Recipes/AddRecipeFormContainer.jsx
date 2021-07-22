@@ -4,9 +4,9 @@ import {
   getValidationErrors,
   inputValueChanged,
   resetState,
-} from 'redux/recipes/addRecipeFormSlice';
+} from 'redux/recipes/slices/addRecipeFormSlice';
 import { getRecipeObjectFromInputs, validateInputs } from 'shared/recipeInputs';
-import { recipeAdded } from 'redux/recipes/recipesSlice';
+import { recipeAdded } from 'redux/recipes/slices/recipesSlice';
 import Form from 'components/Form/Form';
 
 const AddRecipeFormContainer = ({ closeSidebar }) => {

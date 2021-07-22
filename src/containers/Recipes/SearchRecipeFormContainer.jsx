@@ -5,7 +5,7 @@ import { useQuery } from 'hooks/useQuery';
 import {
   inputValueChanged,
   searchValueChanged,
-} from 'redux/recipes/searchRecipeForm';
+} from 'redux/recipes/slices/searchRecipeForm';
 import Form from 'components/Form/Form';
 
 const SearchRecipeForm = () => {
@@ -30,6 +30,7 @@ const SearchRecipeForm = () => {
   const formSubmitHandler = useCallback(
     (e) => {
       e.preventDefault();
+
       // change url, then dispatch (search value changed) using useEffect
       searchInput.value
         ? history.push(`?search=${searchInput.value}`)

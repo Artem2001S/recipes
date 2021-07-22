@@ -16,7 +16,6 @@ const recipesSlice = createSlice({
     },
     recipeAdded: {
       reducer: (state, { payload }) => {
-        console.log('payload reducer', payload);
         state.unshift(payload);
       },
 
@@ -32,11 +31,10 @@ const recipesSlice = createSlice({
       }),
     },
     recipeEdited: {
-      reducer: (state, { payload }) => {
-        return state.map((recipe) =>
+      reducer: (state, { payload }) =>
+        state.map((recipe) =>
           recipe.id === payload.id ? { ...recipe, ...payload } : recipe
-        );
-      },
+        ),
     },
   },
 });

@@ -1,7 +1,7 @@
-import { recipesReducer } from './recipes/recipesSlice';
-import { addRecipeFormReducer } from './recipes/addRecipeFormSlice';
-import { searchRecipeFormReducer } from './recipes/searchRecipeForm';
-import { recipeEditFormReducer } from './recipes/recipeEditForm';
+import { recipesReducer } from 'redux/recipes/slices/recipesSlice';
+import { addRecipeFormReducer } from 'redux/recipes/slices/addRecipeFormSlice';
+import { searchRecipeFormReducer } from 'redux/recipes/slices/searchRecipeForm';
+import { recipeEditFormReducer } from 'redux/recipes/slices/recipeEditFormSlice';
 
 export const reducers = {
   recipes: recipesReducer,

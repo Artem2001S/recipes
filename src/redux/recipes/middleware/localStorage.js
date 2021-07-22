@@ -3,7 +3,7 @@ import {
   recipeAdded,
   recipeDeleted,
   recipeEdited,
-} from 'redux/recipes/recipesSlice';
+} from 'redux/recipes/slices/recipesSlice';
 
 export const saveRecipesToLocalStorageMiddleware =
   (store) => (next) => (action) => {

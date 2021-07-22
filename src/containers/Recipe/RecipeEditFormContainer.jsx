@@ -5,8 +5,8 @@ import {
   getValidationErrors,
   inputValueChanged,
   recipeEditFormInputsInitialized,
-} from 'redux/recipes/recipeEditForm';
-import { recipeEdited } from 'redux/recipes/recipesSlice';
+} from 'redux/recipes/slices/recipeEditFormSlice';
+import { recipeEdited } from 'redux/recipes/slices/recipesSlice';
 import Form from 'components/Form/Form';
 
 const RecipeEditFormContainer = ({ recipe, closeSidebar }) => {

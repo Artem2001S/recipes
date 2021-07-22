@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { getRecipesSelector } from 'redux/recipes/selectors';
+import { getRecipesSelector } from 'redux/recipes/selectors/selectors';
 import Container from 'components/UI/Container/Container';
 import Sidebar from 'components/UI/Sidebar/Sidebar';
 import Button from 'components/UI/Button/Button';
