@@ -7,13 +7,14 @@ import {
   searchValueChanged,
 } from 'redux/recipes/slices/searchRecipeForm';
 import Form from 'components/Form/Form';
+import { getSearchRecipeFormInput } from 'redux/recipes/selectors/selectors';
 
 const SearchRecipeForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const query = useQuery();
 
-  const [searchInput] = useSelector((state) => state.searchRecipeForm.inputs);
+  const searchInput = useSelector(getSearchRecipeFormInput);
   const urlValue = query.get('search');
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const SearchRecipeForm = () => {
     (e) => {
       e.preventDefault();
 
-      // change url, then dispatch (search value changed) using useEffect
+      // change url, then dispatch(search value changed) using useEffect
       searchInput.value
         ? history.push(`?search=${searchInput.value}`)
         : history.push('');

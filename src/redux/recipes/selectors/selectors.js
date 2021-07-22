@@ -1,6 +1,9 @@
 import { createSelector } from 'reselect';
 
 const getRecipes = (state) => state.recipes;
+export const getRecipeEditFormState = (state) => state.recipeEditForm;
+export const getRecipeAddFormState = (state) => state.addRecipeForm;
+
 const getRecipesSearchValue = (state) => state.searchRecipeForm.searchValue;
 
 export const getRecipesSelector = createSelector(
@@ -23,4 +26,10 @@ export const getFilteredRecipes = createSelector(
         recipe.author.toLowerCase().includes(searchLowerCase)
     );
   }
+);
+
+const getSearchRecipeFormInputs = (state) => state.searchRecipeForm.inputs;
+export const getSearchRecipeFormInput = createSelector(
+  getSearchRecipeFormInputs,
+  (inputs) => inputs[0]
 );

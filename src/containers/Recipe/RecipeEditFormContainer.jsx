@@ -7,15 +7,17 @@ import {
   recipeEditFormInputsInitialized,
 } from 'redux/recipes/slices/recipeEditFormSlice';
 import { recipeEdited } from 'redux/recipes/slices/recipesSlice';
+import { getRecipeEditFormState } from 'redux/recipes/selectors/selectors';
 import Form from 'components/Form/Form';
 
 const RecipeEditFormContainer = ({ recipe, closeSidebar }) => {
   const dispatch = useDispatch();
-  const { inputs, errors } = useSelector((state) => state.recipeEditForm);
+  const { inputs, errors } = useSelector(getRecipeEditFormState);
 
   const filledInputs = useMemo(() => utils.fillRecipeInputs(recipe), [recipe]);
 
   useEffect(() => {
+    // initialize default inputs state
     dispatch(recipeEditFormInputsInitialized({ inputs: filledInputs }));
   }, [dispatch, filledInputs]);
 

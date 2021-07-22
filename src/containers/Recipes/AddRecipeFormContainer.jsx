@@ -8,11 +8,12 @@ import {
 import { getRecipeObjectFromInputs, validateInputs } from 'shared/recipeInputs';
 import { recipeAdded } from 'redux/recipes/slices/recipesSlice';
 import Form from 'components/Form/Form';
+import { getRecipeAddFormState } from 'redux/recipes/selectors/selectors';
 
 const AddRecipeFormContainer = ({ closeSidebar }) => {
   const dispatch = useDispatch();
 
-  const { inputs, errors } = useSelector((state) => state.addRecipeForm);
+  const { inputs, errors } = useSelector(getRecipeAddFormState);
 
   const handleInputChange = useCallback(
     (id, value) => dispatch(inputValueChanged({ id, value })),
