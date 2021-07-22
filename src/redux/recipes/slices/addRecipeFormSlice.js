@@ -16,9 +16,7 @@ const addRecipeFormSlice = createSlice({
       state.errors = payload.errors;
     },
 
-    resetState: () => {
-      return initialState;
-    },
+    resetState: () => initialState,
   },
 });
 

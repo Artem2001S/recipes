@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as utils from 'shared/recipeInputs';
+import * as inputsUtils from 'shared/recipeInputs';
 import {
   getValidationErrors,
   inputValueChanged,
@@ -14,7 +14,7 @@ const RecipeEditFormContainer = ({ recipe, closeSidebar }) => {
   const dispatch = useDispatch();
   const { inputs, errors } = useSelector(getRecipeEditFormState);
 
-  const filledInputs = useMemo(() => utils.fillRecipeInputs(recipe), [recipe]);
+  const filledInputs = useMemo(() => inputsUtils.fillRecipeInputs(recipe), [recipe]);
 
   useEffect(() => {
     // initialize default inputs state
@@ -25,12 +25,12 @@ const RecipeEditFormContainer = ({ recipe, closeSidebar }) => {
     (e) => {
       e.preventDefault();
 
-      const validationErrors = utils.validateInputs(inputs);
+      const validationErrors = inputsUtils.validateInputs(inputs);
 
       if (validationErrors.length) {
         dispatch(getValidationErrors({ errors: validationErrors }));
       } else {
-        const recipeObject = utils.getRecipeObjectFromInputs(inputs);
+        const recipeObject = inputsUtils.getRecipeObjectFromInputs(inputs);
         dispatch(
           recipeEdited({
             id: recipe.id,
