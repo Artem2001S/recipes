@@ -2,18 +2,15 @@ import { createSelector } from 'reselect';
 import { recipesSelectors } from '../slices/recipesSlice';
 
 export const getRecipes = recipesSelectors.selectAll;
+export const getRecipesEntities = recipesSelectors.selectEntities;
+
 export const getRecipeEditFormState = (state) => state.recipeEditForm;
 export const getRecipeAddFormState = (state) => state.addRecipeForm;
 
 const getRecipesSearchValue = (state) => state.searchRecipeForm.searchValue;
 
-export const getRecipesSelector = createSelector(
-  [getRecipes],
-  (recipes) => recipes
-);
-
 export const getFilteredRecipes = createSelector(
-  [getRecipesSelector, getRecipesSearchValue],
+  [getRecipes, getRecipesSearchValue],
   (recipes, searchValue) => {
     if (!searchValue) {
       return recipes;

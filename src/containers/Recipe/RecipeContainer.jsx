@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { getRecipesSelector } from 'redux/recipes/selectors/selectors';
+import { getRecipesEntities } from 'redux/recipes/selectors/selectors';
 import Container from 'components/UI/Container/Container';
 import Sidebar from 'components/UI/Sidebar/Sidebar';
 import Button from 'components/UI/Button/Button';
@@ -9,11 +9,9 @@ import RecipeView from 'components/RecipeView/RecipeView';
 import Title from 'components/UI/Title/Title';
 
 const RecipeContainer = ({ recipeId }) => {
-  const recipes = useSelector(getRecipesSelector);
-  const recipe = useMemo(
-    () => recipes.find((recipe) => recipe.id === recipeId),
-    [recipeId, recipes]
-  );
+  const recipesEntities = useSelector(getRecipesEntities);
+  const recipe = useMemo(() => recipesEntities[recipeId], [recipeId, recipesEntities]);
+
   const [isEditing, setIsEditing] = useState(false);
 
   const closeSidebar = useCallback(() => setIsEditing(false), []);
