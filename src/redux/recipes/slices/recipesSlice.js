@@ -1,24 +1,25 @@
 import { getFromLocalStorage } from 'redux/localStorage';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-const { createSlice } = require('@reduxjs/toolkit');
+const recipesAdapter = createEntityAdapter();
+export const recipesSelectors = recipesAdapter.getSelectors(
+  (state) => state.recipes
+);
 
 const name = 'recipes';
-const initialState = getFromLocalStorage(name) || [];
+const initialState =
+  getFromLocalStorage(name) || recipesAdapter.getInitialState();
 
-let nextRecipeId = initialState.length + 1;
+let nextRecipeId = initialState.ids.length + 1;
 
 const recipesSlice = createSlice({
   name,
   initialState,
   reducers: {
-    recipeDeleted: (state, { payload }) => {
-      return state.filter((recipe) => recipe.id !== payload.id);
-    },
+    recipeDeleted: (state, { payload }) =>
+      recipesAdapter.removeOne(state, payload.id),
     recipeAdded: {
-      reducer: (state, { payload }) => {
-        state.unshift(payload);
-      },
-
+      reducer: recipesAdapter.addOne,
       prepare: ({ author, title, content }) => ({
         payload: {
           author,
@@ -32,9 +33,10 @@ const recipesSlice = createSlice({
     },
     recipeEdited: {
       reducer: (state, { payload }) =>
-        state.map((recipe) =>
-          recipe.id === payload.id ? { ...recipe, ...payload } : recipe
-        ),
+        recipesAdapter.updateOne(state, {
+          id: payload.id,
+          changes: { ...payload },
+        }),
     },
   },
 });

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
+import { recipesSelectors } from '../slices/recipesSlice';
 
-const getRecipes = (state) => state.recipes;
+export const getRecipes = recipesSelectors.selectAll;
 export const getRecipeEditFormState = (state) => state.recipeEditForm;
 export const getRecipeAddFormState = (state) => state.addRecipeForm;
 
