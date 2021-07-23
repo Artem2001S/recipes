@@ -1,19 +1,75 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 import { recipeDeleted } from 'redux/recipes/slices/recipesSlice';
 import { getFilteredRecipes } from 'redux/recipes/selectors/selectors';
+import { useQuery } from 'hooks/useQuery';
 import RecipesList from 'components/RecipesList/RecipesList';
+import { searchValueChanged } from 'redux/recipes/slices/recipesSlice';
+import { useHistory } from 'react-router-dom';
 
 const RecipesListContainer = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const query = useQuery();
   const recipes = useSelector(getFilteredRecipes);
 
-  const handleDelete = useCallback(
+  const urlValue = query.get('search');
+
+  const [searchInput, setSearchInput] = useState({
+    id: nanoid(),
+    label: 'Search',
+    name: 'search',
+    value: '',
+    type: 'text',
+  });
+
+  // initialize input value
+  useEffect(() => {
+    changeInputValue(urlValue || '');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const changeInputValue = useCallback(
+    (value) => {
+      setSearchInput({ ...searchInput, value });
+    },
+    [searchInput]
+  );
+
+  const changeInputValueHandler = useCallback(
+    (e) => {
+      changeInputValue(e.target.value);
+    },
+    [changeInputValue]
+  );
+
+  useEffect(() => {
+    dispatch(searchValueChanged({ value: urlValue || '' }));
+  }, [dispatch, urlValue]);
+
+  const handleRecipeDelete = useCallback(
     (id) => dispatch(recipeDeleted({ id })),
     [dispatch]
   );
 
-  return <RecipesList recipes={recipes} onDelete={handleDelete} />;
+  const searchBtnClickHandler = useCallback(() => {
+    // change url, then dispatch(search value changed) using useEffect
+
+    searchInput.value
+      ? history.push(`?search=${searchInput.value}`)
+      : history.push();
+  }, [history, searchInput]);
+
+  return (
+    <RecipesList
+      recipes={recipes}
+      searchInput={searchInput}
+      onDelete={handleRecipeDelete}
+      onSearchInputChange={changeInputValueHandler}
+      onSearchBtnClick={searchBtnClickHandler}
+    />
+  );
 };
 
 export default React.memo(RecipesListContainer);

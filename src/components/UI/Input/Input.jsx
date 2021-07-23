@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import classes from './Input.module.scss';
 import { useInputChangeHandler } from 'hooks/useInputChangeHandler';
 
-const Input = ({ id, label, name, value, onChange }) => {
-  const inputChangeHandler = useInputChangeHandler(id, onChange);
+const Input = ({ id, label, name, value, onChange, needToSendId = true }) => {
+  let inputChangeHandler = useInputChangeHandler(id, onChange);
+  if (!needToSendId) {
+    inputChangeHandler = onChange;
+  }
 
   return (
     <label htmlFor={id} className={classes.Label}>

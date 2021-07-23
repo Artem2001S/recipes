@@ -1,5 +1,5 @@
 import React from 'react';
-import Recipes from 'containers/Recipes/Recipes';
+import Recipes from 'containers/Recipes/RecipesContainer';
 
 const HomePage = () => <Recipes />;
 

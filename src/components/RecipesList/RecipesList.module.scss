@@ -14,3 +14,11 @@
     padding: 10px;
   }
 }
+
+.SearchBlock {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+
+  flex-wrap: wrap;
+}

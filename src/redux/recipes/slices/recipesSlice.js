@@ -8,7 +8,8 @@ export const recipesSelectors = recipesAdapter.getSelectors(
 
 const name = 'recipes';
 const initialState =
-  getFromLocalStorage(name) || recipesAdapter.getInitialState();
+  getFromLocalStorage(name) ||
+  recipesAdapter.getInitialState({ searchValue: '' });
 
 let nextRecipeId = initialState.ids.length + 1;
 
@@ -31,16 +32,17 @@ const recipesSlice = createSlice({
         },
       }),
     },
-    recipeEdited: {
-      reducer: (state, { payload }) =>
-        recipesAdapter.updateOne(state, {
-          id: payload.id,
-          changes: { ...payload },
-        }),
+    recipeEdited: (state, { payload }) =>
+      recipesAdapter.updateOne(state, {
+        id: payload.id,
+        changes: { ...payload },
+      }),
+    searchValueChanged: (state, { payload }) => {
+      state.searchValue = payload.value;
     },
   },
 });
 
-export const { recipeDeleted, recipeAdded, recipeEdited } =
+export const { recipeDeleted, recipeAdded, recipeEdited, searchValueChanged } =
   recipesSlice.actions;
 export const recipesReducer = recipesSlice.reducer;
