@@ -1,5 +1,5 @@
 import { getFromLocalStorage } from 'redux/localStorage';
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter, nanoid } from '@reduxjs/toolkit';
 
 const recipesAdapter = createEntityAdapter();
 export const recipesSelectors = recipesAdapter.getSelectors(
@@ -10,8 +10,6 @@ const name = 'recipes';
 const initialState =
   getFromLocalStorage(name) ||
   recipesAdapter.getInitialState({ searchValue: '' });
-
-let nextRecipeId = initialState.ids.length + 1;
 
 const recipesSlice = createSlice({
   name,
@@ -26,7 +24,7 @@ const recipesSlice = createSlice({
           author,
           title,
           content,
-          id: nextRecipeId++ + '',
+          id: nanoid(),
           dateOfCreate: new Date().toLocaleDateString(),
           dateOfLastEdit: null,
         },
