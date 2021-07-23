@@ -4,8 +4,6 @@ import { recipesSelectors } from '../slices/recipesSlice';
 export const getRecipes = recipesSelectors.selectAll;
 export const getRecipesEntities = recipesSelectors.selectEntities;
 
-export const getRecipeEditFormState = (state) => state.recipeEditForm;
-
 const getRecipesSearchValue = (state) => state.recipes.searchValue;
 
 export const getFilteredRecipes = createSelector(

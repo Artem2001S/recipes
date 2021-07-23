@@ -1,25 +1,20 @@
-import React, { useCallback, useMemo, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import * as inputsUtils from 'shared/recipeInputs';
-import {
-  getValidationErrors,
-  inputValueChanged,
-  recipeEditFormInputsInitialized,
-} from 'redux/recipes/slices/recipeEditFormSlice';
 import { recipeEdited } from 'redux/recipes/slices/recipesSlice';
-import { getRecipeEditFormState } from 'redux/recipes/selectors/selectors';
 import Form from 'components/Form/Form';
+import { useState } from 'react';
 
 const RecipeEditFormContainer = ({ recipe, closeSidebar }) => {
   const dispatch = useDispatch();
-  const { inputs, errors } = useSelector(getRecipeEditFormState);
 
-  const filledInputs = useMemo(() => inputsUtils.fillRecipeInputs(recipe), [recipe]);
+  const filledInputs = useMemo(
+    () => inputsUtils.fillRecipeInputs(recipe),
+    [recipe]
+  );
 
-  useEffect(() => {
-    // initialize default inputs state
-    dispatch(recipeEditFormInputsInitialized({ inputs: filledInputs }));
-  }, [dispatch, filledInputs]);
+  const [inputs, setInputs] = useState(filledInputs);
+  const [errors, setErrors] = useState([]);
 
   const formSubmitHandler = useCallback(
     (e) => {
@@ -28,7 +23,7 @@ const RecipeEditFormContainer = ({ recipe, closeSidebar }) => {
       const validationErrors = inputsUtils.validateInputs(inputs);
 
       if (validationErrors.length) {
-        dispatch(getValidationErrors({ errors: validationErrors }));
+        setErrors(validationErrors);
       } else {
         const recipeObject = inputsUtils.getRecipeObjectFromInputs(inputs);
         dispatch(
@@ -38,16 +33,18 @@ const RecipeEditFormContainer = ({ recipe, closeSidebar }) => {
             dateOfLastEdit: new Date().toLocaleDateString(),
           })
         );
-        dispatch(getValidationErrors({ errors: [] }));
         closeSidebar();
       }
     },
-    [inputs, dispatch, recipe.id, closeSidebar]
+    [inputs, dispatch, recipe, closeSidebar]
   );
 
   const inputChangeHandler = useCallback(
-    (id, value) => dispatch(inputValueChanged({ id, value })),
-    [dispatch]
+    (id, value) =>
+      setInputs(
+        inputs.map((input) => (input.id === id ? { ...input, value } : input))
+      ),
+    [inputs]
   );
 
   return (
