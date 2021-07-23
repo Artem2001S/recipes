@@ -1,9 +1,17 @@
 import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import classes from './Sidebar.module.scss';
 import classNames from 'classnames';
+import {
+  clearAllBodyScrollLocks,
+  disableBodyScroll,
+  enableBodyScroll,
+} from 'body-scroll-lock';
+import classes from './Sidebar.module.scss';
+import { useRef } from 'react';
 
 const Sidebar = ({ visible, children, right, left = true, close }) => {
+  const targetRef = useRef(null);
+
   const contentClasses = classNames(
     { [classes.Right]: right },
     { [classes.Left]: left },
@@ -12,17 +20,18 @@ const Sidebar = ({ visible, children, right, left = true, close }) => {
   );
 
   useEffect(() => {
-    if (visible) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'initial';
-    }
+    visible
+      ? disableBodyScroll(targetRef)
+      : enableBodyScroll(targetRef);
+    return () => {
+      clearAllBodyScrollLocks();
+    };
   }, [visible]);
 
   const stopPropagation = useCallback((e) => e.stopPropagation(), []);
 
   return visible ? (
-    <div className={classes.SidebarOverlay} onClick={close}>
+    <div ref={targetRef} className={classes.SidebarOverlay} onClick={close}>
       <div className={contentClasses} onClick={stopPropagation}>
         {children}
       </div>
