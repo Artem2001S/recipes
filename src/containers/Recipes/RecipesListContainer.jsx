@@ -4,9 +4,9 @@ import { nanoid } from '@reduxjs/toolkit';
 import { recipeDeleted } from 'redux/recipes/slices/recipesSlice';
 import { getFilteredRecipes } from 'redux/recipes/selectors/selectors';
 import { useQuery } from 'hooks/useQuery';
-import RecipesList from 'components/RecipesList/RecipesList';
 import { searchValueChanged } from 'redux/recipes/slices/recipesSlice';
 import { useHistory } from 'react-router-dom';
+import RecipesList from 'components/RecipesList/RecipesList';
 
 const RecipesListContainer = () => {
   const dispatch = useDispatch();
