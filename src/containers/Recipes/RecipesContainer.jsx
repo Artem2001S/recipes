@@ -1,5 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { getIsLoadingSelector } from 'redux/recipes/selectors/selectors';
+import {
+  getErrorSelector,
+  getIsLoadingSelector,
+} from 'redux/recipes/selectors/selectors';
 import { useSelector } from 'react-redux';
 import RecipesListContainer from './RecipesListContainer';
 import Container from 'components/UI/Container/Container';
@@ -7,6 +10,7 @@ import Button from 'components/UI/Button/Button';
 import Sidebar from 'components/UI/Sidebar/Sidebar';
 import AddRecipeFormContainer from './AddRecipeFormContainer';
 import Loader from 'components/UI/Loader/Loader';
+import Errors from 'components/UI/Errors/Errors';
 
 const Recipes = () => {
   const [sidebarVisibility, setSidebarVisibility] = useState(false);
@@ -18,10 +22,12 @@ const Recipes = () => {
   const closeSidebar = useCallback(() => setSidebarVisibility(false), []);
 
   const isLoading = useSelector(getIsLoadingSelector);
+  const error = useSelector(getErrorSelector);
 
   return (
     <Container>
       {isLoading && <Loader />}
+      {error && <Errors errors={[error]} />}
       <Button onClick={openSidebarBtnClickHandler}>Add new recipe</Button>
       <Sidebar visible={sidebarVisibility} close={closeSidebar}>
         <AddRecipeFormContainer closeSidebar={closeSidebar} />

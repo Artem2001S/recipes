@@ -1,17 +1,19 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  getErrorSelector,
   getIsLoadingSelector,
   getRecipesEntities,
 } from 'redux/recipes/selectors/selectors';
+import { fetchRecipes } from 'redux/recipes/slices/recipesSlice';
 import Container from 'components/UI/Container/Container';
 import Sidebar from 'components/UI/Sidebar/Sidebar';
 import Button from 'components/UI/Button/Button';
 import RecipeEditFormContainer from './RecipeEditFormContainer';
 import RecipeView from 'components/RecipeView/RecipeView';
 import Title from 'components/UI/Title/Title';
-import { fetchRecipes } from 'redux/recipes/slices/recipesSlice';
 import Loader from 'components/UI/Loader/Loader';
+import Errors from 'components/UI/Errors/Errors';
 
 const RecipeContainer = ({ recipeId }) => {
   const dispatch = useDispatch();
@@ -20,7 +22,9 @@ const RecipeContainer = ({ recipeId }) => {
     () => recipesEntities[recipeId],
     [recipeId, recipesEntities]
   );
+
   const isLoading = useSelector(getIsLoadingSelector);
+  const error = useSelector(getErrorSelector);
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -33,6 +37,7 @@ const RecipeContainer = ({ recipeId }) => {
     <Loader />
   ) : (
     <Container>
+      {error && <Errors errors={[error]} />}
       {recipe ? (
         <>
           <RecipeView recipe={recipe} />
