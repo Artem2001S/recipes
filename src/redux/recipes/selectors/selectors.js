@@ -5,6 +5,14 @@ export const getRecipes = recipesSelectors.selectAll;
 export const getRecipesEntities = recipesSelectors.selectEntities;
 
 const getRecipesSearchValue = (state) => state.recipes.searchValue;
+const getLoadingStatus = (state) => state.recipes.status;
+
+export const getIsLoadingSelector = createSelector(
+  [getLoadingStatus],
+  (status) => status === 'loading'
+);
+
+export const getErrorSelector = (state) => state.recipes.error;
 
 export const getFilteredRecipes = createSelector(
   [getRecipes, getRecipesSearchValue],

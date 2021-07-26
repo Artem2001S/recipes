@@ -1,5 +1,9 @@
-import { getFromLocalStorage } from 'redux/localStorage';
-import { createSlice, createEntityAdapter, nanoid } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createEntityAdapter,
+  nanoid,
+  createAction,
+} from '@reduxjs/toolkit';
 
 const recipesAdapter = createEntityAdapter();
 export const recipesSelectors = recipesAdapter.getSelectors(
@@ -7,14 +11,17 @@ export const recipesSelectors = recipesAdapter.getSelectors(
 );
 
 const name = 'recipes';
-const initialState =
-  getFromLocalStorage(name) ||
-  recipesAdapter.getInitialState({ searchValue: '' });
+const initialState = recipesAdapter.getInitialState({
+  searchValue: '',
+  status: null,
+  error: null,
+});
 
 const recipesSlice = createSlice({
   name,
   initialState,
   reducers: {
+    recipesLoaded: recipesAdapter.upsertMany,
     recipeDeleted: (state, { payload }) =>
       recipesAdapter.removeOne(state, payload.id),
     recipeAdded: {
@@ -38,9 +45,30 @@ const recipesSlice = createSlice({
     searchValueChanged: (state, { payload }) => {
       state.searchValue = payload.value;
     },
+    loadingStarted: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    loadingFinished: (state) => {
+      state.status = null;
+    },
+    getError: (state, { payload }) => {
+      state.error = payload;
+    },
   },
 });
 
-export const { recipeDeleted, recipeAdded, recipeEdited, searchValueChanged } =
-  recipesSlice.actions;
+export const fetchRecipes = createAction(`${name}/fetchRecipes`);
+
+export const {
+  recipeDeleted,
+  recipeAdded,
+  recipeEdited,
+  searchValueChanged,
+  loadingFinished,
+  loadingStarted,
+  recipesLoaded,
+  getError,
+} = recipesSlice.actions;
+
 export const recipesReducer = recipesSlice.reducer;

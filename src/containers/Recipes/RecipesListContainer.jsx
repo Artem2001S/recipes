@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
-import { recipeDeleted } from 'redux/recipes/slices/recipesSlice';
+import { fetchRecipes, recipeDeleted } from 'redux/recipes/slices/recipesSlice';
 import { getFilteredRecipes } from 'redux/recipes/selectors/selectors';
 import { useQuery } from 'hooks/useQuery';
 import { searchValueChanged } from 'redux/recipes/slices/recipesSlice';
@@ -24,9 +24,11 @@ const RecipesListContainer = () => {
     type: 'text',
   });
 
-  // initialize input value
   useEffect(() => {
+    // initialize input value
     changeInputValue(urlValue || '');
+
+    dispatch(fetchRecipes());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

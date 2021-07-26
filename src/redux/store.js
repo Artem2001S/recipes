@@ -1,10 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { saveRecipesToLocalStorageMiddleware } from './recipes/middleware/localStorage';
+import createSagaMiddleware from 'redux-saga';
 import { reducers } from './reducers';
+import { rootSaga } from './rootSaga';
+
+const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: reducers,
   devTools: true,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(saveRecipesToLocalStorageMiddleware),
+    getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
 });
+
+sagaMiddleware.run(rootSaga);

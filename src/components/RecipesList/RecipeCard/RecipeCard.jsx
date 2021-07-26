@@ -27,7 +27,7 @@ const RecipeCard = ({ id, author, title, content, dateOfCreate, onDelete }) => {
 };
 
 RecipeCard.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   author: PropTypes.string,
   title: PropTypes.string,
   content: PropTypes.string,
