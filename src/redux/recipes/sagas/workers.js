@@ -16,6 +16,7 @@ export function* fetchRecipesWorker() {
       throw new Error('Loading recipes error');
     }
     const data = yield response.json();
+
     yield put(recipesLoaded(data));
   } catch (error) {
     yield put(getError());
