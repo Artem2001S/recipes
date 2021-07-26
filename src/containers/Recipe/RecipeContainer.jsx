@@ -1,23 +1,37 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { getRecipesEntities } from 'redux/recipes/selectors/selectors';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getIsLoadingSelector,
+  getRecipesEntities,
+} from 'redux/recipes/selectors/selectors';
 import Container from 'components/UI/Container/Container';
 import Sidebar from 'components/UI/Sidebar/Sidebar';
 import Button from 'components/UI/Button/Button';
 import RecipeEditFormContainer from './RecipeEditFormContainer';
 import RecipeView from 'components/RecipeView/RecipeView';
 import Title from 'components/UI/Title/Title';
+import { fetchRecipes } from 'redux/recipes/slices/recipesSlice';
+import Loader from 'components/UI/Loader/Loader';
 
 const RecipeContainer = ({ recipeId }) => {
+  const dispatch = useDispatch();
   const recipesEntities = useSelector(getRecipesEntities);
-  const recipe = useMemo(() => recipesEntities[recipeId], [recipeId, recipesEntities]);
+  const recipe = useMemo(
+    () => recipesEntities[recipeId],
+    [recipeId, recipesEntities]
+  );
+  const isLoading = useSelector(getIsLoadingSelector);
 
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => dispatch(fetchRecipes()), [dispatch]);
 
   const closeSidebar = useCallback(() => setIsEditing(false), []);
   const showSidebar = useCallback(() => setIsEditing(true), []);
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Container>
       {recipe ? (
         <>
