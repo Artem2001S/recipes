@@ -3,9 +3,10 @@ import {
   getError,
   loadingFinished,
   loadingStarted,
+  recipeAdded,
   recipesLoaded,
 } from '../slices/recipesSlice';
-import { fetchRecipesRequest } from './requests';
+import { createRecipeRequest, fetchRecipesRequest } from './requests';
 
 export function* fetchRecipesWorker() {
   try {
@@ -18,6 +19,28 @@ export function* fetchRecipesWorker() {
     const data = yield response.json();
 
     yield put(recipesLoaded(data));
+  } catch (error) {
+    yield put(getError());
+  } finally {
+    yield put(loadingFinished());
+  }
+}
+
+export function* createRecipeWorker(action) {
+  try {
+    yield put(loadingStarted());
+    const { payload } = action;
+    const response = yield call(createRecipeRequest, {
+      ...payload,
+      dateOfCreate: new Date().toLocaleDateString(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Recipe creating error.');
+    }
+
+    const createdRecipe = yield response.json();
+    yield put(recipeAdded(createdRecipe));
   } catch (error) {
     yield put(getError());
   } finally {

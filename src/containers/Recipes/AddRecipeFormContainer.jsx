@@ -5,7 +5,7 @@ import {
   recipeInputs,
   validateInputs,
 } from 'shared/recipeInputs';
-import { recipeAdded } from 'redux/recipes/slices/recipesSlice';
+import { createRecipe } from 'redux/recipes/slices/recipesSlice';
 import Form from 'components/Form/Form';
 
 const AddRecipeFormContainer = ({ closeSidebar }) => {
@@ -33,7 +33,7 @@ const AddRecipeFormContainer = ({ closeSidebar }) => {
         setErrors(validationErrors);
       } else {
         const recipe = getRecipeObjectFromInputs(inputs);
-        dispatch(recipeAdded(recipe));
+        dispatch(createRecipe(recipe));
         closeSidebar();
       }
     },

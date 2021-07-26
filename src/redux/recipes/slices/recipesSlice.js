@@ -1,7 +1,6 @@
 import {
   createSlice,
   createEntityAdapter,
-  nanoid,
   createAction,
 } from '@reduxjs/toolkit';
 
@@ -24,19 +23,7 @@ const recipesSlice = createSlice({
     recipesLoaded: recipesAdapter.upsertMany,
     recipeDeleted: (state, { payload }) =>
       recipesAdapter.removeOne(state, payload.id),
-    recipeAdded: {
-      reducer: recipesAdapter.addOne,
-      prepare: ({ author, title, content }) => ({
-        payload: {
-          author,
-          title,
-          content,
-          id: nanoid(),
-          dateOfCreate: new Date().toLocaleDateString(),
-          dateOfLastEdit: null,
-        },
-      }),
-    },
+    recipeAdded: recipesAdapter.addOne,
     recipeEdited: (state, { payload }) =>
       recipesAdapter.updateOne(state, {
         id: payload.id,
@@ -59,6 +46,7 @@ const recipesSlice = createSlice({
 });
 
 export const fetchRecipes = createAction(`${name}/fetchRecipes`);
+export const createRecipe = createAction(`${name}/createRecipe`);
 
 export const {
   recipeDeleted,
