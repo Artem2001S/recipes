@@ -11,5 +11,17 @@ export const createRecipeRequest = (data) =>
       ...data,
     }),
   });
+
+export const patchRecipeRequest = (id, data) =>
+  fetch(`${url}/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...data,
+    }),
+  });
+
 export const deleteRecipeRequest = (id) =>
   fetch(`${url}/${id}`, { method: 'DELETE' });

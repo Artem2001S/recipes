@@ -7,6 +7,7 @@ import {
   createRecipeRequest,
   deleteRecipeRequest,
   fetchRecipesRequest,
+  patchRecipeRequest,
 } from '../requests';
 
 const recipesAdapter = createEntityAdapter();
@@ -80,6 +81,24 @@ export const createRecipe = createAsyncThunk(
   }
 );
 
+export const updateRecipe = createAsyncThunk(
+  `${name}/updateRecipe`,
+  async (payload, { rejectWithValue, dispatch }) => {
+    try {
+      const { id, ...data } = payload;
+      const response = await patchRecipeRequest(id, data);
+
+      if (!response.ok) {
+        throw new Error('Recipe update request error');
+      }
+
+      dispatch(recipeEdited(payload));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const startLoading = (state) => {
   state.status = 'loading';
   state.error = null;
@@ -115,6 +134,7 @@ const recipesSlice = createSlice({
     [fetchRecipes.pending]: startLoading,
     [deleteRecipe.pending]: startLoading,
     [createRecipe.pending]: startLoading,
+    [updateRecipe.pending]: startLoading,
 
     [fetchRecipes.fulfilled]: (state, { payload }) => {
       finishLoading(state);
@@ -122,10 +142,12 @@ const recipesSlice = createSlice({
     },
     [deleteRecipe.fulfilled]: finishLoading,
     [createRecipe.fulfilled]: finishLoading,
+    [updateRecipe.fulfilled]: finishLoading,
 
     [fetchRecipes.rejected]: setError,
     [deleteRecipe.rejected]: setError,
     [createRecipe.rejected]: setError,
+    [updateRecipe.rejected]: setError,
   },
 });
 
