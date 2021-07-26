@@ -5,6 +5,8 @@ export const getRecipes = recipesSelectors.selectAll;
 export const getRecipesEntities = recipesSelectors.selectEntities;
 
 const getRecipesSearchValue = (state) => state.recipes.searchValue;
+export const getLoadingStatusSelector = (state) => state.recipes.status;
+export const getErrorsSelector = (state) => state.recipes.error;
 
 export const getFilteredRecipes = createSelector(
   [getRecipes, getRecipesSearchValue],

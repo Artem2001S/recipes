@@ -1,5 +1,10 @@
-import { getFromLocalStorage } from 'redux/localStorage';
-import { createSlice, createEntityAdapter, nanoid } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createEntityAdapter,
+  nanoid,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
+import { fetchRecipesRequest } from '../requests';
 
 const recipesAdapter = createEntityAdapter();
 export const recipesSelectors = recipesAdapter.getSelectors(
@@ -7,9 +12,42 @@ export const recipesSelectors = recipesAdapter.getSelectors(
 );
 
 const name = 'recipes';
-const initialState =
-  getFromLocalStorage(name) ||
-  recipesAdapter.getInitialState({ searchValue: '' });
+const initialState = recipesAdapter.getInitialState({
+  searchValue: '',
+  status: null,
+  error: null,
+});
+
+export const fetchRecipes = createAsyncThunk(
+  `${name}/fetchRecipes`,
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetchRecipesRequest();
+      if (!response.ok) {
+        throw new Error('Loading recipes error...');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+const startLoading = (state) => {
+  state.status = 'loading';
+  state.error = null;
+};
+
+const finishLoading = (state) => {
+  state.status = null;
+  state.error = null;
+};
+
+const setError = (state, { payload }) => {
+  state.error = payload;
+  state.status = null;
+};
 
 const recipesSlice = createSlice({
   name,
@@ -38,6 +76,14 @@ const recipesSlice = createSlice({
     searchValueChanged: (state, { payload }) => {
       state.searchValue = payload.value;
     },
+  },
+  extraReducers: {
+    [fetchRecipes.fulfilled]: (state, { payload }) => {
+      finishLoading(state);
+      recipesAdapter.upsertMany(state, payload);
+    },
+    [fetchRecipes.pending]: startLoading,
+    [fetchRecipes.rejected]: setError,
   },
 });
 
