@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  getErrorsSelector,
   getLoadingStatusSelector,
   getRecipesEntities,
 } from 'redux/recipes/selectors/selectors';
@@ -13,10 +14,12 @@ import Title from 'components/UI/Title/Title';
 import { useEffect } from 'react';
 import { fetchRecipes } from 'redux/recipes/slices/recipesSlice';
 import Loader from 'components/UI/Loader/Loader';
+import Errors from 'components/UI/Errors/Errors';
 
 const RecipeContainer = ({ recipeId }) => {
   const loadingStatus = useSelector(getLoadingStatusSelector);
   const isLoading = useMemo(() => loadingStatus === 'loading', [loadingStatus]);
+  const error = useSelector(getErrorsSelector);
 
   const dispatch = useDispatch();
   const recipesEntities = useSelector(getRecipesEntities);
@@ -37,6 +40,8 @@ const RecipeContainer = ({ recipeId }) => {
 
   return (
     <Container>
+      {error && <Errors errors={[error]} />}
+
       {isLoading ? (
         <Loader />
       ) : recipe ? (
