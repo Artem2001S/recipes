@@ -43,7 +43,6 @@ export const deleteRecipe = createAsyncThunk(
   async (payload, { rejectWithValue, dispatch }) => {
     try {
       const { id } = payload;
-      console.log('id', id);
       const response = await deleteRecipeRequest(payload.id);
 
       if (!response.ok) {
