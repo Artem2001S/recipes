@@ -47,6 +47,7 @@ const recipesSlice = createSlice({
 
 export const fetchRecipes = createAction(`${name}/fetchRecipes`);
 export const createRecipe = createAction(`${name}/createRecipe`);
+export const deleteRecipe = createAction(`${name}/deleteRecipe`);
 
 export const {
   recipeDeleted,

@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
-import { fetchRecipes, recipeDeleted } from 'redux/recipes/slices/recipesSlice';
+import { deleteRecipe, fetchRecipes } from 'redux/recipes/slices/recipesSlice';
 import { getFilteredRecipes } from 'redux/recipes/selectors/selectors';
 import { useQuery } from 'hooks/useQuery';
 import { searchValueChanged } from 'redux/recipes/slices/recipesSlice';
@@ -51,7 +51,7 @@ const RecipesListContainer = () => {
   }, [dispatch, urlValue]);
 
   const handleRecipeDelete = useCallback(
-    (id) => dispatch(recipeDeleted({ id })),
+    (id) => dispatch(deleteRecipe({ id })),
     [dispatch]
   );
 

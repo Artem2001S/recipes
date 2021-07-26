@@ -4,9 +4,14 @@ import {
   loadingFinished,
   loadingStarted,
   recipeAdded,
+  recipeDeleted,
   recipesLoaded,
 } from '../slices/recipesSlice';
-import { createRecipeRequest, fetchRecipesRequest } from './requests';
+import {
+  createRecipeRequest,
+  deleteRecipeRequest,
+  fetchRecipesRequest,
+} from './requests';
 
 export function* fetchRecipesWorker() {
   try {
@@ -20,7 +25,7 @@ export function* fetchRecipesWorker() {
 
     yield put(recipesLoaded(data));
   } catch (error) {
-    yield put(getError());
+    yield put(getError(error.message));
   } finally {
     yield put(loadingFinished());
   }
@@ -42,7 +47,25 @@ export function* createRecipeWorker(action) {
     const createdRecipe = yield response.json();
     yield put(recipeAdded(createdRecipe));
   } catch (error) {
-    yield put(getError());
+    yield put(getError(error.message));
+  } finally {
+    yield put(loadingFinished());
+  }
+}
+
+export function* deleteRecipeWorker({ payload }) {
+  try {
+    const { id } = payload;
+
+    yield put(loadingStarted());
+    const response = yield call(deleteRecipeRequest, id);
+    if (!response.ok) {
+      throw new Error('Recipe deleting server error.');
+    }
+
+    yield put(recipeDeleted({ id }));
+  } catch (error) {
+    yield put(getError(error.message));
   } finally {
     yield put(loadingFinished());
   }
