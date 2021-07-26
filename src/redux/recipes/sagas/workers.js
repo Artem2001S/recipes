@@ -5,12 +5,14 @@ import {
   loadingStarted,
   recipeAdded,
   recipeDeleted,
+  recipeEdited,
   recipesLoaded,
 } from '../slices/recipesSlice';
 import {
   createRecipeRequest,
   deleteRecipeRequest,
   fetchRecipesRequest,
+  patchRecipeRequest,
 } from './requests';
 
 export function* fetchRecipesWorker() {
@@ -64,6 +66,24 @@ export function* deleteRecipeWorker({ payload }) {
     }
 
     yield put(recipeDeleted({ id }));
+  } catch (error) {
+    yield put(getError(error.message));
+  } finally {
+    yield put(loadingFinished());
+  }
+}
+
+export function* patchRecipeWorker({ payload }) {
+  try {
+    yield put(loadingStarted());
+    const { id, ...data } = payload;
+    const response = yield call(patchRecipeRequest, id, data);
+
+    if (!response.ok) {
+      throw new Error('Recipe patching server error.');
+    }
+
+    yield put(recipeEdited({ id, ...data }));
   } catch (error) {
     yield put(getError(error.message));
   } finally {

@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import * as inputsUtils from 'shared/recipeInputs';
-import { recipeEdited } from 'redux/recipes/slices/recipesSlice';
+import { patchRecipe } from 'redux/recipes/slices/recipesSlice';
 import Form from 'components/Form/Form';
 import { useState } from 'react';
 
@@ -27,7 +27,7 @@ const RecipeEditFormContainer = ({ recipe, closeSidebar }) => {
       } else {
         const recipeObject = inputsUtils.getRecipeObjectFromInputs(inputs);
         dispatch(
-          recipeEdited({
+          patchRecipe({
             id: recipe.id,
             ...recipeObject,
             dateOfLastEdit: new Date().toLocaleDateString(),
