@@ -1,10 +1,13 @@
 import {
   createSlice,
   createEntityAdapter,
-  nanoid,
   createAsyncThunk,
 } from '@reduxjs/toolkit';
-import { deleteRecipeRequest, fetchRecipesRequest } from '../requests';
+import {
+  createRecipeRequest,
+  deleteRecipeRequest,
+  fetchRecipesRequest,
+} from '../requests';
 
 const recipesAdapter = createEntityAdapter();
 export const recipesSelectors = recipesAdapter.getSelectors(
@@ -53,6 +56,30 @@ export const deleteRecipe = createAsyncThunk(
   }
 );
 
+export const createRecipe = createAsyncThunk(
+  `${name}/createRecipe`,
+  async (payload, { rejectWithValue, dispatch }) => {
+    try {
+      const { author, title, content } = payload;
+      const response = await createRecipeRequest({
+        author,
+        title,
+        content,
+        dateOfCreate: new Date().toLocaleDateString(),
+        dateOfLastEdit: null,
+      });
+
+      if (!response.ok) {
+        throw new Error('Recipe creating error');
+      }
+      const data = await response.json();
+      dispatch(recipeAdded(data));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const startLoading = (state) => {
   state.status = 'loading';
   state.error = null;
@@ -74,19 +101,7 @@ const recipesSlice = createSlice({
   reducers: {
     recipeRemoved: (state, { payload }) =>
       recipesAdapter.removeOne(state, payload.id),
-    recipeAdded: {
-      reducer: recipesAdapter.addOne,
-      prepare: ({ author, title, content }) => ({
-        payload: {
-          author,
-          title,
-          content,
-          id: nanoid(),
-          dateOfCreate: new Date().toLocaleDateString(),
-          dateOfLastEdit: null,
-        },
-      }),
-    },
+    recipeAdded: recipesAdapter.addOne,
     recipeEdited: (state, { payload }) =>
       recipesAdapter.updateOne(state, {
         id: payload.id,
@@ -99,13 +114,18 @@ const recipesSlice = createSlice({
   extraReducers: {
     [fetchRecipes.pending]: startLoading,
     [deleteRecipe.pending]: startLoading,
+    [createRecipe.pending]: startLoading,
+
     [fetchRecipes.fulfilled]: (state, { payload }) => {
       finishLoading(state);
       recipesAdapter.upsertMany(state, payload);
     },
     [deleteRecipe.fulfilled]: finishLoading,
+    [createRecipe.fulfilled]: finishLoading,
+
     [fetchRecipes.rejected]: setError,
     [deleteRecipe.rejected]: setError,
+    [createRecipe.rejected]: setError,
   },
 });
 
