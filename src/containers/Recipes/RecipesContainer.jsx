@@ -10,9 +10,9 @@ import Loader from 'components/UI/Loader/Loader';
 
 const Recipes = () => {
   const loadingStatus = useSelector(getLoadingStatusSelector);
+  const isLoading = useMemo(() => loadingStatus === 'loading', [loadingStatus]);
 
   const [sidebarVisibility, setSidebarVisibility] = useState(false);
-  const isLoading = useMemo(() => loadingStatus === 'loading', [loadingStatus]);
 
   const openSidebarBtnClickHandler = useCallback(() => {
     setSidebarVisibility(true);
