@@ -1,9 +1,6 @@
 import React, { useCallback, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  getErrorsSelector,
-  getLoadingStatusSelector,
-} from 'redux/recipes/selectors/selectors';
+import { getLoadingStatusSelector } from 'redux/recipes/selectors/selectors';
 import RecipesListContainer from './RecipesListContainer';
 import Container from 'components/UI/Container/Container';
 import Button from 'components/UI/Button/Button';

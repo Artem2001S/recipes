@@ -4,7 +4,7 @@ import {
   nanoid,
   createAsyncThunk,
 } from '@reduxjs/toolkit';
-import { fetchRecipesRequest } from '../requests';
+import { deleteRecipeRequest, fetchRecipesRequest } from '../requests';
 
 const recipesAdapter = createEntityAdapter();
 export const recipesSelectors = recipesAdapter.getSelectors(
@@ -34,6 +34,25 @@ export const fetchRecipes = createAsyncThunk(
   }
 );
 
+export const deleteRecipe = createAsyncThunk(
+  `${name}/deleteRecipe`,
+  async (payload, { rejectWithValue, dispatch }) => {
+    try {
+      const { id } = payload;
+      console.log('id', id);
+      const response = await deleteRecipeRequest(payload.id);
+
+      if (!response.ok) {
+        throw new Error('Recipe deleting server error.');
+      }
+
+      dispatch(recipeRemoved({ id }));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const startLoading = (state) => {
   state.status = 'loading';
   state.error = null;
@@ -53,7 +72,7 @@ const recipesSlice = createSlice({
   name,
   initialState,
   reducers: {
-    recipeDeleted: (state, { payload }) =>
+    recipeRemoved: (state, { payload }) =>
       recipesAdapter.removeOne(state, payload.id),
     recipeAdded: {
       reducer: recipesAdapter.addOne,
@@ -78,15 +97,18 @@ const recipesSlice = createSlice({
     },
   },
   extraReducers: {
+    [fetchRecipes.pending]: startLoading,
+    [deleteRecipe.pending]: startLoading,
     [fetchRecipes.fulfilled]: (state, { payload }) => {
       finishLoading(state);
       recipesAdapter.upsertMany(state, payload);
     },
-    [fetchRecipes.pending]: startLoading,
+    [deleteRecipe.fulfilled]: finishLoading,
     [fetchRecipes.rejected]: setError,
+    [deleteRecipe.rejected]: setError,
   },
 });
 
-export const { recipeDeleted, recipeAdded, recipeEdited, searchValueChanged } =
+export const { recipeRemoved, recipeAdded, recipeEdited, searchValueChanged } =
   recipesSlice.actions;
 export const recipesReducer = recipesSlice.reducer;
