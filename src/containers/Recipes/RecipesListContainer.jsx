@@ -2,17 +2,22 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { deleteRecipe, fetchRecipes } from 'redux/recipes/slices/recipesSlice';
-import { getFilteredRecipes } from 'redux/recipes/selectors/selectors';
+import {
+  getFilteredRecipes,
+  getIsLoadingSelector,
+} from 'redux/recipes/selectors/selectors';
 import { useQuery } from 'hooks/useQuery';
 import { searchValueChanged } from 'redux/recipes/slices/recipesSlice';
 import { useHistory } from 'react-router-dom';
 import RecipesList from 'components/RecipesList/RecipesList';
+import Loader from 'components/UI/Loader/Loader';
 
 const RecipesListContainer = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const query = useQuery();
   const recipes = useSelector(getFilteredRecipes);
+  const isLoading = useSelector(getIsLoadingSelector);
 
   const urlValue = query.get('search');
 
@@ -63,7 +68,9 @@ const RecipesListContainer = () => {
       : history.push();
   }, [history, searchInput]);
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <RecipesList
       recipes={recipes}
       searchInput={searchInput}
