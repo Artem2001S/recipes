@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Input from 'components/UI/Input/Input';
 import Textarea from 'components/UI/Textarea/Textarea';
 import Button from 'components/UI/Button/Button';
-import Errors from './Errors/Errors';
+import Errors from '../UI/Errors/Errors';
 import Title from 'components/UI/Title/Title';
 import classes from './Form.module.scss';
 
